@@ -24,7 +24,8 @@ class MenuController extends Controller
     {
         $user = DB::table('user')->where('code','USR001')->first();
         Session::put('userinfo', $user);
-        return Redirect::to('menu/create');
+        echo "My Dashboard";
+        // return Redirect::to('menu/create');
     }
 
     /**
@@ -35,7 +36,7 @@ class MenuController extends Controller
     public function create()
     {
         //
-        $this->acl->validateRead();
+        $msg = $this->acl->validateRead();
         $results = $this->menu->get_list_menus();
         // echo session('msg_permission');
         dd('Success');
@@ -58,9 +59,9 @@ class MenuController extends Controller
      * @param  \App\Models\menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function show(menu $menu)
+    public function show()
     {
-        //
+        
     }
 
     /**
@@ -71,7 +72,7 @@ class MenuController extends Controller
      */
     public function edit(menu $menu)
     {
-        //
+        
     }
 
     /**
