@@ -19,7 +19,6 @@ class Acl
     private $field_update = 'is_update';
     private $field_destroy = 'is_delete';
     private $field_approved = 'is_approved';
-    private $super_admin = '1';
 
     function getMySession(){
         $userinfo = Session::get('userinfo');
@@ -54,6 +53,11 @@ class Acl
                     ->first();
         return $result;
     }
+    private function getSetting(){
+        $result = DB::table($this->table_set) 
+                    ->first();
+        return $result;
+    }
     private function checkPermissionUser(){
         $result = $this->getPermissionUser();
         if(!$result){
@@ -74,19 +78,24 @@ class Acl
     }
     private function isAllGranted(){
         $result = $this->getPermissionUser();
+        $setting = $this->getSetting();
         if(!$result){
             return false; 
         }
-        if($result->role_code == $this->super_admin){
+        if(!$setting){
+            return false;
+        }
+        if($result->role_code == $setting->role_code_access_all){
             return true;
         }else{
             return false;
         }
     }
-    function managementPermission($cname, $field_name, $permission, $is_json=false, $is_array=false){
+    private function managementPermission($cname, $field_name, $permission, $is_json=false, $is_array=false){
         $msg = "";
+        $set = $this->getSetting();
         if(!$this->isMaintenance()){
-            $msg = 'MAINTENANCE PROCESS';
+            return redirect()->away(url($set->link_maintenance))->send();
         }
         if($this->isAllGranted()){
             return true;
@@ -107,7 +116,7 @@ class Acl
 
         Session::flash('msg_permission', $msg);
         if($msg != ""){
-            return redirect()->away(url('/menu'))->send();
+            return redirect()->away(url($set->default_redirect))->send();
         }
 
     }
@@ -131,15 +140,19 @@ class Acl
         $cname = $this->getClassName();
         return $this->managementPermission($cname, $this->field_approved, true, $is_json, $is_array);
     }
-
-    function msgValidatePermission($msg=""){
+    function maintenanceWeb(){
+        $set = $this->getSetting();
+        if($this->isMaintenance()){
+            return redirect()->away(url($set->default_redirect))->send();
+        }
+    }
+    private function msgValidatePermission($msg=""){
         $data = array(
             'msg' => $msg
         );
         return $data;
     }
-
-    function getClassName(){
+    private function getClassName(){
         $path = get_class(Route::getCurrentRoute()->getController());
         $splitPath = explode('\\', $path);
         $cname = $splitPath[3];

@@ -1,5 +1,5 @@
 <?php
-
+use Acl;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,5 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/maintenance', function () {
+    $acl = new Acl;
+    $acl->maintenanceWeb();
+    return view('maintenance');
+});
 Route::resource('menu', 'App\Http\Controllers\MenuController');
