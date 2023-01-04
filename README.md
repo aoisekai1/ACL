@@ -45,6 +45,9 @@ How to use:
     ```
 5.  Ejoy to use   
 
+__Note__: 1. If you 
+1. use ajax for submit form  so acl will be return json
+2. not use ajax pure use php so acl will be redirect to default page and you can show message with call variable session "msg_permission" some like "Session::has('msg_permission')" 
 # Methods
 | Function | Param | Description |
 | --- | --- | --- |
