@@ -22,23 +22,23 @@ class LoginController extends Controller
     function auth(Request $request){
         $request->request->remove('submit');
         if(count($request->all()) > 0){
+            $error = 1;
+            $message = 'Login failed';
             $data = array(
-                'error' => 1,
                 'status' => 'Failed',
-                'message' => 'Login failed',
                 'data' => array(),
                 'redirect' => ''
             );
             $user = $this->login->get_auth($request->all());
             if($user){
                 Session::put('userinfo', $user);
-                $data['error'] = 0;
+                $error = 0;
+                $message = 'Login success';
                 $data['status'] = 'OK';
-                $data['message'] = 'Login success';
                 $data['redirect'] = url('dashboard');
             }
-            $json = json_encode($data);
-            return $json;
+            
+            return JSONRES($error, $message, $data);
         }
     }
 }

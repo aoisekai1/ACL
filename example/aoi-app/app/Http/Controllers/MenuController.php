@@ -21,8 +21,10 @@ class MenuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('dash/index');
+    {   
+        $data = array();
+        $data['results'] = $this->menu::orderByRaw('label_sort,group_code ASC')->get();
+        return view('menu/index', $data);
     }
 
     /**
@@ -33,8 +35,10 @@ class MenuController extends Controller
     public function create()
     {
         $this->acl->validateRead();
-        // $code = $this->menu->generate_code_menu();
-        return view('menu/form/create');
+        $data = array();
+        $code = $this->menu->generate_code_menu();
+        $data['code_menu'] = $code;
+        return view('menu/form/create', $data);
     }
 
     /**
@@ -45,10 +49,22 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $mname = "CancelController";
-        $this->acl->validateStore($mname);
-        $request->request->remove('submit');
-        dd($request->all());
+        $this->acl->validateStore();
+        try {
+            DB::beginTransaction();
+            // $request->request->remove('submit');
+            $post = $request->all();
+            if($this->menu->create($post)){
+                DB::commit();
+                return JSONRES(SUCCESS, 'Success save data');
+            }else{
+                DB::rollBack();
+                return JSONRES(ERROR, 'Failed save data');
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            return JSONRES(ERROR, 'Failed save data');
+        }
     }
 
     /**

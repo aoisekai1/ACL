@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-6">
                         <label for="inputNanme4" class="form-label">Code</label>
-                        <input type="text" name="code" class="form-control" id="inputNanme4">
+                        <input type="text" name="code" class="form-control" id="inputNanme4" value="{{$code_menu}}" readonly>
                     </div>
                     <div class="col-6">
                         <label for="inputEmail4" class="form-label">Label</label>
@@ -33,11 +33,11 @@
                     </div>
                     <div class="col-6">
                         <label for="inputPassword4" class="form-label">Status</label>
-                        <input type="text" name="status" class="form-control" id="inputPassword4">
+                        {{Form::select('status', STATUS(), null, ['class' => 'form-control'])}}
                     </div>
                     <div class="col-6">
                         <label for="inputPassword4" class="form-label">Sub Status</label>
-                        <input type="text" name="sub_status" class="form-control" id="inputPassword4">
+                        {{Form::select('sub_status', SUB_STATUS(), null, ['class' => 'form-control'])}}
                     </div>
                     <div class="col-6">
                         <label for="inputPassword4" class="form-label">Sort Menu</label>
@@ -47,7 +47,7 @@
             </div>
             <div class="col-12">
                 <button type="button" class="btn btn-primary" onclick="store(event)">Submit</button>
-                <button type="reset" class="btn btn-secondary">Reset</button>
+                <a href="{{route('menu.index')}}" class="btn btn-secondary">Reset</a>
             </div>
         </form>
     </div>

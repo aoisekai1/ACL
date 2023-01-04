@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Menu extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'menus';
     protected $fillable = ['code','label','group_code','class_name','url','status','sub_status','label_sort'];
     function get_list_menu(){
@@ -79,11 +80,12 @@ class Menu extends Model
                     ->orderByDesc('id')
                     ->first();
         if($result){
-            $removeInit = str_replace("M","",$result->code);
-            $code_menu = (int)$removeInit + 1;
+            $number = str_replace("M","",$result->code);
+            $code_menu = (int)$number + 1;
         }else{
             $code_menu = $code_menu + 1;
         }
-        dd($code_menu);
+        $code_menu = sprintf('%s%05d', $init_menu, $code_menu);
+        return $code_menu;
     }
 }
