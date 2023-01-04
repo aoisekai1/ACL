@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\menu;
+use App\Models\Menu;
 use Acl;
 use Session;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class MenuController extends Controller
 {
     function __construct(){
         $this->acl = new Acl;
-        $this->menu = new menu;
+        $this->menu = new Menu;
     }
     /**
      * Display a listing of the resource.
@@ -22,9 +22,6 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $user = DB::table('user')->where('code','USR001')->first();
-        Session::put('userinfo', $user);
-        // Session::flush();
         return view('dash/index');
     }
 

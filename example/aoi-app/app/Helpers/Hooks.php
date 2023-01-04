@@ -1,5 +1,5 @@
 <?php
-use App\Models\menu;
+use App\Models\Menu;
 
 if(!function_exists('ListMenu')){
     function ListMenu(){

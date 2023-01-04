@@ -28,8 +28,9 @@ class Acl
         $userinfo = $this->getMySession();
         $set = $this->getSetting();
         if(!$userinfo){
-            return redirect()->away(url($set->default_redirect))->send();
+            return false;
         }
+        return true;
     }
     private function checkPermissionMenu($cname="", $field= '', $permission=null){
         $field = 'pm.'.$field;
@@ -98,7 +99,9 @@ class Acl
     private function managementPermission($cname, $field_name, $permission, $is_json=false, $is_array=false){
         $msg = "";
         $set = $this->getSetting();
-        $this->checkMySession();
+        if(!$this->checkMySession()){
+            return redirect()->away(url($set->default_redirect))->send();
+        }
         if(!$this->isMaintenance()){
             return redirect()->away(url($set->link_maintenance))->send();
         }

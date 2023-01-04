@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Privillage;
+use App\Models\Pu;
 use Illuminate\Http\Request;
 
-class PrivillageController extends Controller
+class PuController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class PrivillageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\privillage  $privillage
+     * @param  \App\Models\pu  $pu
      * @return \Illuminate\Http\Response
      */
-    public function show(privillage $privillage)
+    public function show(pu $pu)
     {
         //
     }
@@ -52,10 +52,10 @@ class PrivillageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\privillage  $privillage
+     * @param  \App\Models\pu  $pu
      * @return \Illuminate\Http\Response
      */
-    public function edit(privillage $privillage)
+    public function edit(pu $pu)
     {
         //
     }
@@ -64,10 +64,10 @@ class PrivillageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\privillage  $privillage
+     * @param  \App\Models\pu  $pu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, privillage $privillage)
+    public function update(Request $request, pu $pu)
     {
         //
     }
@@ -75,10 +75,10 @@ class PrivillageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\privillage  $privillage
+     * @param  \App\Models\pu  $pu
      * @return \Illuminate\Http\Response
      */
-    public function destroy(privillage $privillage)
+    public function destroy(pu $pu)
     {
         //
     }
