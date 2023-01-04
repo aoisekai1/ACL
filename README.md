@@ -4,7 +4,9 @@ ACL (Access Control List) for Laravel
 How to use:
 1. Import sql from folder sql
 2. Create new folder "Helpers" in "project_name/app/"
-3. Register Acl.php in "config/app.php" some like:
+3. Create file in folder "Helpers"
+4. Copy file "Acl.php" to folder "Helpers"
+5. Register Acl.php in "config/app.php" some like this:
     ```
     /*
         |
@@ -18,11 +20,10 @@ How to use:
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
         'Acl' => App\Helpers\Acl::class
     ])->toArray()
     ```
-4. Call ACL on controller and use ACL, example:
+6. Call ACL on controller and use ACL, example:
     ```
     <?php
 
@@ -43,7 +44,7 @@ How to use:
             }
         }
     ```
-5.  Ejoy to use   
+7.  Ejoy to use   
 
 __Note__: If you 
 1. use ajax for submit form  so acl will be return json
