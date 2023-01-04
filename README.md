@@ -5,25 +5,25 @@ How to use:
 1. Import sql from folder sql
 2. Create new folder "Helpers" in "project_name/app/"
 3. Register Acl.php in "config/app.php" some like:
-   /*
-    |--------------------------------------------------------------------------
-    | Class Aliases
-    |--------------------------------------------------------------------------
-    |
-    | This array of class aliases will be registered when this application
-    | is started. However, feel free to register as many as you wish as
-    | the aliases are "lazy" loaded so they don't hinder performance.
-    |
+    ````
+    ```
+    /*
+        |
+        | Class Aliases
+        |
+        |
+        | This array of class aliases will be registered when this application
+        | is started. However, feel free to register as many as you wish as
+        | the aliases are "lazy" loaded so they don't hinder performance.
+        |
     */
-    /**
-    --------------------------------------------------------------------------
+
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Acl' => App\Helpers\Acl::class
     ])->toArray()
-    --------------------------------------------------------------------------
-    */
-
+    ````
+    ```
 4. Call ACL on controller and use ACL, example:
     /** 
     <?php
