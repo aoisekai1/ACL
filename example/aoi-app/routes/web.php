@@ -18,9 +18,12 @@ Route::get('/maintenance', function () {
     return view('maintenance');
 });
 
-Route::get('/', 'App\Http\Controllers\LoginController@index')->name('home');
-Route::get('login', 'App\Http\Controllers\LoginController@index')->name('login');
-Route::post('login/auth', 'App\Http\Controllers\LoginController@auth')->name('login.auth');
+Route::group(['middleware' => 'verify.user'], function () {
+    Route::get('/', 'App\Http\Controllers\LoginController@index')->name('home');
+    Route::get('login', 'App\Http\Controllers\LoginController@index')->name('login');
+    Route::post('login/auth', 'App\Http\Controllers\LoginController@auth')->name('login.auth');
+});
+
 Route::group(['middleware' => 'verify.login'], function () {
     Route::get('dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
     Route::get('logout', 'App\Http\Controllers\DashboardController@logout')->name('logout');

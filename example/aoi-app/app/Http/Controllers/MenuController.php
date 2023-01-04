@@ -33,7 +33,7 @@ class MenuController extends Controller
     public function create()
     {
         //
-        $msg = $this->acl->validateRead();
+        $this->acl->validateRead();
         return view('menu/form/create');
     }
 
@@ -45,7 +45,9 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->acl->validateStore();
+        $request->request->remove('submit');
+        dd($request->all());
     }
 
     /**

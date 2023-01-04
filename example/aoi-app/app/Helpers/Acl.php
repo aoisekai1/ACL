@@ -3,6 +3,7 @@ namespace App\Helpers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 use Session;
 
 class Acl
@@ -20,11 +21,11 @@ class Acl
     private $field_destroy = 'is_delete';
     private $field_approved = 'is_approved';
 
-    function getMySession(){
+    private function getMySession(){
         $userinfo = Session::get('userinfo');
         return $userinfo;
     }
-    function checkMySession(){
+    function checkMySession($is_redirect=true){
         $userinfo = $this->getMySession();
         $set = $this->getSetting();
         if(!$userinfo){
@@ -112,7 +113,7 @@ class Acl
             $msg = "You haven't permission";
         }
         if(!$this->checkPermissionMenu($cname, $field_name, $permission)){
-            $msg = "You haven't to access this menu";
+            $msg = "You haven't to access this ".$this->actionText($field_name)." menu";
         }
 
         if($is_json){
@@ -121,11 +122,22 @@ class Acl
         if($is_array){
             return $this->msgValidatePermission($msg);
         }
-
         Session::flash('msg_permission', $msg);
+        if(request()->ajax()){
+            $data = array(
+                'error' => 1,
+                'status' => 'Failed',
+                'message' => $msg,
+                'data' => array(),
+                'isRefresh' => false
+            );
+            $json = json_encode($data);
+            die($json);
+        }
         if($msg != ""){
             return redirect()->away(url($set->default_redirect))->send();
         }
+        
 
     }
     function validateRead($is_json=false, $is_array=false){
@@ -159,6 +171,19 @@ class Acl
             'msg' => $msg
         );
         return $data;
+    }
+    private function actionText($field=null){
+        $data = array(
+            $this->field_read => 'Read',
+            $this->field_store => 'Insert',
+            $this->field_update => 'Update',
+            $this->field_destroy => 'Delete',
+            $this->field_approved => 'Approved'
+        );
+        if(!is_null($field)){
+            return $data[$field];
+        }
+        return '';
     }
     private function getClassName(){
         $path = get_class(Route::getCurrentRoute()->getController());

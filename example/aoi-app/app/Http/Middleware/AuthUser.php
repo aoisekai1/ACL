@@ -16,6 +16,9 @@ class AuthUser
      */
     public function handle(Request $request, Closure $next)
     {
+        if($request->session()->get('userinfo')){
+            return redirect()->guest('dashboard');
+        }
         return $next($request);
     }
 }
