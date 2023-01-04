@@ -15,13 +15,15 @@ How to use:
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
-
+    /**
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Acl' => App\Helpers\Acl::class
     ])->toArray()
+    */
 
 4. Call ACL on controller and use ACL, example:
+    /** 
     <?php
 
         namespace App\Http\Controllers;
@@ -40,4 +42,5 @@ How to use:
                 $this->acl->validateRead();
             }
         }
+    */
 5.  Ejoy to use    
