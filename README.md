@@ -16,10 +16,12 @@ How to use:
     |
     */
     /**
+    --------------------------------------------------------------------------
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Acl' => App\Helpers\Acl::class
     ])->toArray()
+    --------------------------------------------------------------------------
     */
 
 4. Call ACL on controller and use ACL, example:
