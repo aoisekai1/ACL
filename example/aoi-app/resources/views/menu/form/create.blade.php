@@ -21,7 +21,7 @@
                     <div class="col-6">
                         <label for="inputPassword4" class="form-label">Group Sub Menu</label>
                         <input type="text" name="group_smenu" class="form-control" id="inputPassword4" placeholder="Example: TO for menu and TOS for sub menu">
-                        <small id="emailHelp" class="form-text text-muted">Note: use "S" in back alias if sub menu example : TOS(label transaction order sub menu)</small>
+                        <small id="emailHelp" class="form-text text-muted">Note: if 1. input label: "", 2. input menu: TO (initial for "T" label transction and "O" menu order), 3. input sub menu: TOS (initial "S" is sub menu) </small>
                     </div>
                     <div class="col-6">
                         <label for="inputPassword4" class="form-label">Class Name</label>

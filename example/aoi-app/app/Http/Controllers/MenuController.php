@@ -32,8 +32,8 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
         $this->acl->validateRead();
+        // $code = $this->menu->generate_code_menu();
         return view('menu/form/create');
     }
 
@@ -45,7 +45,8 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $this->acl->validateStore();
+        $mname = "CancelController";
+        $this->acl->validateStore($mname);
         $request->request->remove('submit');
         dd($request->all());
     }

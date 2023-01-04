@@ -132,6 +132,9 @@ class Acl
                 'isRefresh' => false
             );
             $json = json_encode($data);
+            if($msg==""){
+                return true;
+            }
             die($json);
         }
         if($msg != ""){
@@ -140,24 +143,34 @@ class Acl
         
 
     }
-    function validateRead($is_json=false, $is_array=false){
-        $cname = $this->getClassName();
+    function validateRead($cname=null,$is_json=false, $is_array=false){
+        if(is_null($cname)){
+            $cname = $this->getClassName();
+        }
         return $this->managementPermission($cname, $this->field_read, true, $is_json, $is_array);
     }
-    function validateStore($is_json=false, $is_array=false){
-        $cname = $this->getClassName();
+    function validateStore($cname=null,$is_json=false, $is_array=false){
+        if(is_null($cname)){
+            $cname = $this->getClassName();
+        }
         return $this->managementPermission($cname, $this->field_store, true, $is_json, $is_array);
     }
-    function validateUpdate($is_json=false, $is_array=false){
-        $cname = $this->getClassName();
+    function validateUpdate($cname=null,$is_json=false, $is_array=false){
+        if(is_null($cname)){
+            $cname = $this->getClassName();
+        }
         return $this->managementPermission($cname, $this->field_update, true, $is_json, $is_array);
     }
-    function validateDestroy($is_json=false, $is_array=false){
-        $cname = $this->getClassName();
+    function validateDestroy($cname=null,$is_json=false, $is_array=false){
+        if(is_null($cname)){
+            $cname = $this->getClassName();
+        }
         return $this->managementPermission($cname, $this->field_destroy, true, $is_json, $is_array);
     }
-    function validateApproved($is_json=false, $is_array=false){
-        $cname = $this->getClassName();
+    function validateApproved($cname=null,$is_json=false, $is_array=false){
+        if(is_null($cname)){
+            $cname = $this->getClassName();
+        }
         return $this->managementPermission($cname, $this->field_approved, true, $is_json, $is_array);
     }
     function maintenanceWeb(){

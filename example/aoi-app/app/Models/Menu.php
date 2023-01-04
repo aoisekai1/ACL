@@ -71,4 +71,19 @@ class Menu extends Model
                         ->get();
         return $results;
     }
+
+    function generate_code_menu(){
+        $code_menu = "00000";
+        $init_menu = "M";
+        $result = DB::table($this->table)
+                    ->orderByDesc('id')
+                    ->first();
+        if($result){
+            $removeInit = str_replace("M","",$result->code);
+            $code_menu = (int)$removeInit + 1;
+        }else{
+            $code_menu = $code_menu + 1;
+        }
+        dd($code_menu);
+    }
 }
