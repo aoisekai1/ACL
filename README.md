@@ -43,4 +43,14 @@ How to use:
             }
         }
     ```
-5.  Ejoy to use    
+5.  Ejoy to use   
+
+#Methods
+| Command | param | Description |
+| --- | --- | --- |
+| validateRead() | class_name, is_json, is_array | Check permission read |
+| validateStore() | class_name, is_json, is_array | Check permission insert |
+| validateUpdate() | class_name, is_json, is_array | Check permission update |
+| validateDestroy() | class_name, is_json, is_array | Check permission destroy |
+| validateApproved() | class_name, is_json, is_array | Check permission approved |
+| checkMySession() |  | Check session |
