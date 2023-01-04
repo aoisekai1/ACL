@@ -45,7 +45,7 @@ How to use:
     ```
 5.  Ejoy to use   
 
-#Methods
+# Methods
 | Function | Param | Description |
 | --- | --- | --- |
 | validateRead() | class_name, is_json, is_array | Check permission read |
