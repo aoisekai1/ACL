@@ -1,5 +1,5 @@
 <?php
-use Acl;
+use Acl as Acl;
 use Illuminate\Support\Facades\Route;
 
 /*

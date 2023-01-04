@@ -22,10 +22,14 @@ class Acl
 
     function getMySession(){
         $userinfo = Session::get('userinfo');
-        if(!$userinfo){
-            return 'Empty session';
-        }
         return $userinfo;
+    }
+    function checkMySession(){
+        $userinfo = $this->getMySession();
+        $set = $this->getSetting();
+        if(!$userinfo){
+            return redirect()->away(url($set->default_redirect))->send();
+        }
     }
     private function checkPermissionMenu($cname="", $field= '', $permission=null){
         $field = 'pm.'.$field;
@@ -94,6 +98,7 @@ class Acl
     private function managementPermission($cname, $field_name, $permission, $is_json=false, $is_array=false){
         $msg = "";
         $set = $this->getSetting();
+        $this->checkMySession();
         if(!$this->isMaintenance()){
             return redirect()->away(url($set->link_maintenance))->send();
         }
