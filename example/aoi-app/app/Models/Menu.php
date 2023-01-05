@@ -11,7 +11,17 @@ class Menu extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'menus';
-    protected $fillable = ['code','label','group_code','class_name','url','status','sub_status','label_sort'];
+    protected $fillable = [
+        'code',
+        'label',
+        'group_code',
+        'class_name',
+        'url',
+        'status',
+        'sub_status',
+        'label_sort', 
+        'description'
+    ];
     function get_list_menu(){
         $data = array();
         $results = $this->get_label_menu();

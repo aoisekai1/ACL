@@ -22,6 +22,7 @@ class MenuController extends Controller
      */
     public function index()
     {   
+        $this->acl->validateRead();
         $data = array();
         $data['results'] = $this->menu::orderByRaw('label_sort,group_code ASC')->get();
         return view('menu/index', $data);
@@ -52,7 +53,7 @@ class MenuController extends Controller
         $this->acl->validateStore();
         try {
             DB::beginTransaction();
-            // $request->request->remove('submit');
+            $request->request->remove('submit');
             $post = $request->all();
             if($this->menu->create($post)){
                 DB::commit();
@@ -84,9 +85,11 @@ class MenuController extends Controller
      * @param  \App\Models\menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function edit(menu $menu)
+    public function edit($id)
     {
-        
+        $data = array();
+        $data['result'] = $this->menu::find($id);
+        return view('menu/form/edit', $data);
     }
 
     /**
@@ -96,9 +99,25 @@ class MenuController extends Controller
      * @param  \App\Models\menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, menu $menu)
+    public function update(Request $request, $id)
     {
-        //
+        $this->acl->validateUpdate();
+        try {
+            DB::beginTransaction();
+            $result = $this->menu::find($id);
+            $post_data = $request->all();
+            unset($post_data['submit']);
+            if($result->update($post_data)){
+                DB::commit();
+                return JSONRES(SUCCESS, 'Success update data');
+            }else{
+                DB::rollBack();
+                return JSONRES(ERROR, 'Failed update data');
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            return JSONRES(ERROR, 'Failed update data');
+        }
     }
 
     /**
@@ -107,8 +126,21 @@ class MenuController extends Controller
      * @param  \App\Models\menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function destroy(menu $menu)
+    public function destroy($id)
     {
-        //
+        $this->acl->validateDestroy();
+        try {
+            DB::beginTransaction();
+            $result = $this->menu::find($id);
+            if($result->delete()){
+                DB::commit();
+                return JSONRES(SUCCESS, 'Success delete data');
+            }else{
+                DB::rollBack();
+                return JSONRES(ERROR, 'Failed delete data');
+            }
+        } catch (\Throwable $th) {
+            return JSONRES(ERROR, 'Failed delete data');
+        }
     }
 }
