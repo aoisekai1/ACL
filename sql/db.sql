@@ -39,25 +39,9 @@ CREATE TABLE IF NOT EXISTS `menus` (
   `status` tinyint(1) DEFAULT NULL,
   `sub_status` enum('L','H','S') DEFAULT 'L',
   `label_sort` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `description` varchar(256) DEFAULT NULL,
+RIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
-
---
--- Dumping data for table `menus`
---
-
-INSERT INTO `menus` (`id`, `code`, `label`, `group_code`, `group_smenu`, `class_name`, `url`, `status`, `sub_status`, `label_sort`) VALUES
-(4, 'M00001', 'Privillages', 'PG', NULL, NULL, NULL, 1, 'L', 200),
-(5, 'M00002', 'Transaction', 'T', NULL, NULL, NULL, 1, 'L', 400),
-(6, 'M00003', 'Order', 'T', 'TO', NULL, NULL, 1, 'H', 410),
-(7, 'M00004', 'Payment', 'T', NULL, NULL, NULL, 1, 'H', 420),
-(8, 'M00005', 'Privillage Menu', 'PG', NULL, NULL, NULL, 0, 'H', 210),
-(9, 'M00006', 'Privillage User', 'PG', NULL, NULL, NULL, 0, 'H', 220),
-(10, 'M00007', 'Master', 'M', NULL, NULL, NULL, 1, 'L', 300),
-(11, 'M00008', 'Cancel', 'T', 'TOS', 'CancelController', '/menu', 1, 'S', 413),
-(12, 'M00009', 'Success', 'T', 'TOS', NULL, '/menu/create', 1, 'S', 412),
-(13, 'M00010', 'Menu', 'M', NULL, 'MenuController', 'menu', 1, 'H', 310),
-(14, 'M00011', 'Group', 'PG', NULL, 'PgController', 'pg', 1, 'H', 230);
 
 -- --------------------------------------------------------
 
@@ -72,14 +56,6 @@ CREATE TABLE IF NOT EXISTS `privillage_groups` (
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `privillage_groups`
---
-
-INSERT INTO `privillage_groups` (`id`, `code`, `label`, `status`) VALUES
-(1, 'PG0001', 'Accounting', 1),
-(2, 'PG0002', 'Production', 1);
 
 -- --------------------------------------------------------
 
@@ -99,15 +75,6 @@ CREATE TABLE IF NOT EXISTS `privillage_menus` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
---
--- Dumping data for table `privillage_menus`
---
-
-INSERT INTO `privillage_menus` (`id`, `privillage_group_code`, `menu_code`, `is_read`, `is_insert`, `is_update`, `is_delete`, `is_approved`) VALUES
-(1, 'PG0002', 'M00005', 1, 0, 0, 0, 0),
-(2, 'PG0001', 'M00005', 1, 1, 1, 1, 1),
-(3, 'PG0002', 'M00010', 1, 0, 0, 0, 0),
-(4, 'PG0002', 'M00008', 0, 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 

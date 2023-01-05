@@ -30,6 +30,7 @@ class Menu extends Model
             $group_menu = array(
                 'label' => $r->label,
                 'gmenu' => $r->group_code,
+                'url' => $r->url,
                 'menu' => array()
             );
             foreach($menu as $m){

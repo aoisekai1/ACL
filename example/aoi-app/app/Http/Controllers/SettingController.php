@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pu;
-use App\Models\Privillage;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 use Acl;
 
-class PuController extends Controller
+class SettingController extends Controller
 {
     function __construct(){
         $this->acl = new Acl;
-        $this->pu = new Pu;
-        $this->privillage = new Privillage;
+        $this->setting = new Setting;
     }
     /**
      * Display a listing of the resource.
@@ -23,7 +20,11 @@ class PuController extends Controller
      */
     public function index()
     {
-        return abort(404);
+        $this->acl->validateRead();
+        $data = array();
+        $data['dd_role'] = $this->setting->dd_roles();
+        $data['result'] = $this->setting->first();
+        return view('setting/form/edit', $data);
     }
 
     /**
@@ -31,14 +32,9 @@ class PuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $this->acl->validateStore();
-        $data = array();
-        $data['dd_privillage'] = $this->pu->dd_privillage(array('pg_code' => $request->get('pg')));
-        $data['dd_user'] = $this->pu->dd_user();
-        $data['privillage_code'] = $request->get('pg');
-        return view('pu/form/create', $data);
+        return abort(404);
     }
 
     /**
@@ -54,7 +50,7 @@ class PuController extends Controller
             DB::beginTransaction();
             $request->request->remove('submit');
             $post = $request->all();
-            if($this->pu->create($post)){
+            if($this->setting->create($post)){
                 DB::commit();
                 return JSONRES(SUCCESS, 'Success save data');
             }else{
@@ -70,43 +66,30 @@ class PuController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\pu  $pu
+     * @param  \App\Models\Setting  $setting
      * @return \Illuminate\Http\Response
      */
-    public function show($privillage_code)
+    public function show(Setting $setting)
     {
-        $this->acl->validateRead();
-        $data = array();
-        $data['privillage'] = $this->privillage->where('code', $privillage_code)->first();
-        if(!$data['privillage']){
-            return Redirect::to('privillage');
-        }
-        $data['results'] = $this->pu->get_data(array('pg_code' => $privillage_code));
-        $data['privillage_code'] = $privillage_code;
-        return view('pu/index', $data);
+        return abort(404);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\pu  $pu
+     * @param  \App\Models\Setting  $setting
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Setting $setting)
     {
-        $this->acl->validateUpdate();
-        $data = array();
-        $data['result'] = $this->pu->get_data(array('id' => $id));
-        $data['dd_privillage'] = $this->pu->dd_privillage(array('pg_code' => $data['result']->privillage_group_code));
-        $data['dd_user'] = $this->pu->dd_user();
-        return view('pu/form/edit', $data);
+        return abort(404);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\pu  $pu
+     * @param  \App\Models\Setting  $setting
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -114,12 +97,14 @@ class PuController extends Controller
         $this->acl->validateUpdate();
         try {
             DB::beginTransaction();
-            $result = $this->pu::find($id);
+            $result = $this->setting->find($id);
             $post_data = $request->all();
             unset($post_data['submit']);
+            $addons = array();
+            $addons['isRefresh'] = false;
             if($result->update($post_data)){
                 DB::commit();
-                return JSONRES(SUCCESS, 'Success update data');
+                return JSONRES(SUCCESS, 'Success update data', $addons);
             }else{
                 DB::rollBack();
                 return JSONRES(ERROR, 'Failed update data');
@@ -132,24 +117,11 @@ class PuController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\pu  $pu
+     * @param  \App\Models\Setting  $setting
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Setting $setting)
     {
-        $this->acl->validateDestroy();
-        try {
-            DB::beginTransaction();
-            $result = $this->pu::find($id);
-            if($result->delete()){
-                DB::commit();
-                return JSONRES(SUCCESS, 'Success delete data');
-            }else{
-                DB::rollBack();
-                return JSONRES(ERROR, 'Failed delete data');
-            }
-        } catch (\Throwable $th) {
-            return JSONRES(ERROR, $th->getMessage());
-        }
+        return abort(404);
     }
 }

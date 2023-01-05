@@ -31,4 +31,5 @@ Route::group(['middleware' => 'verify.login'], function () {
     Route::resource('pm', 'App\Http\Controllers\PmController');
     Route::resource('pu', 'App\Http\Controllers\PuController');
     Route::resource('menu', 'App\Http\Controllers\MenuController');
+    Route::resource('setting', 'App\Http\Controllers\SettingController');
 });

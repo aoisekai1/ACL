@@ -99,12 +99,12 @@ class Acl
     }
     private function managementPermission($cname, $field_name, $permission, $is_json=false, $is_array=false){
         $msg = "";
-        $set = $this->getSetting();
+        list($default_redirect, $link_maintenance) = $this->setting();
         if(!$this->checkMySession()){
-            return redirect()->away(url($set->default_redirect))->send();
+            return redirect()->away(url($default_redirect))->send();
         }
         if(!$this->isMaintenance()){
-            return redirect()->away(url($set->link_maintenance))->send();
+            return redirect()->away(url($link_maintenance))->send();
         }
         if($this->isAllGranted()){
             return true;
@@ -138,7 +138,7 @@ class Acl
             die($json);
         }
         if($msg != ""){
-            return redirect()->away(url($set->default_redirect))->send();
+            return redirect()->away(url($default_redirect))->send();
         }
         
 
@@ -174,9 +174,9 @@ class Acl
         return $this->managementPermission($cname, $this->field_approved, true, $is_json, $is_array);
     }
     function maintenanceWeb(){
-        $set = $this->getSetting();
+        list($default_redirect, $link_maintenance) = $this->setting();
         if($this->isMaintenance()){
-            return redirect()->away(url($set->default_redirect))->send();
+            return redirect()->away(url($link_maintenance))->send();
         }
     }
     private function msgValidatePermission($msg=""){
@@ -203,6 +203,22 @@ class Acl
         $splitPath = explode('\\', $path);
         $cname = $splitPath[3];
         return $cname;
+    }
+
+    private function setting(){
+        $set = $this->getSetting();
+        $default_redirect = '/';
+        $link_maintenance = '/maintenance';
+        if($set){
+            if($set->default_redirect){
+                $default_redirect = $set->default_redirect;
+            }
+            if($set->link_maintenance){
+                $link_maintenance = $set->link_maintenance;
+            }
+        }
+
+        return array($default_redirect, $link_maintenance);
     }
 
 }
