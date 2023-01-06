@@ -11,6 +11,9 @@
 </div><!-- End Page Title -->
 
 <section class="section dashboard">
+    @if(session('msg_permission'))
+    <div class="alert alert-info" role="alert">{{session('msg_permission')}}</div>
+    @endif
     <div class="row">
 
     <!-- Left side columns -->
