@@ -127,7 +127,8 @@ CREATE TABLE IF NOT EXISTS `roles` (
 
 INSERT INTO `roles` (`id`, `code`, `description`) VALUES
 (1, 1, 'Super Admin'),
-(2, 20, 'Admin');
+(2, 20, 'Admin'),
+(3, 30, 'Reguler');
 
 -- --------------------------------------------------------
 
@@ -171,9 +172,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `code`, `username`, `password`, `role_code`) VALUES
-(1, 'USR001', 'Diana', '12345', 1),
-(2, 'USR002', 'Mina', '12345', 2);
+INSERT INTO `users` (`id`, `code`, `username`, `password`, `role_code`, `is_active`) VALUES
+(1, 'USR001', 'Diana', '12345', 1, 1),
+(2, 'USR002', 'Mina', '12345', 50, 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

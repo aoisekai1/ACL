@@ -3,7 +3,7 @@ ACL (Access Control List) for Laravel
 
 How to use:
 1. Import sql from folder sql
-2. Insert data in table setting
+2. Insert data in table setting. If you want to give access all menu update value role code in field role_code_access_all
 3. Create new folder "Helpers" in "project_name/app/"
 4. Create file in folder "Helpers"
 5. Copy file "Acl.php" to folder "Helpers"
