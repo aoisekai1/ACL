@@ -12,7 +12,7 @@ class Pu extends Model
     public $timestamps = false;
     protected $table = 'privillage_users';
     protected $t_pg = 'privillage_groups';
-    protected $t_user = 'user';
+    protected $t_user = 'users';
     protected $fillable = [
         'privillage_group_code',
         'user_code',

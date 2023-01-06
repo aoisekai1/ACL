@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\DB;
 class Login extends Model
 {
     use HasFactory;
-    protected $table = 'user';
+    protected $table = 'users';
 
     function get_auth($param=array()){
-        $user = DB::table('user')
+        $user = DB::table($this->table)
                 ->where('username', $param['username'])
                 ->where('password', $param['password'])
                 ->first();

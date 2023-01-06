@@ -13,7 +13,7 @@ class Acl
     private $table_pm = 'privillage_menus';
     private $table_set = 'setting';
     private $table_menu = 'menus';
-    private $user = 'user';
+    private $user = 'users';
     private $role = 'roles';
     private $field_read = 'is_read';
     private $field_store = 'is_insert';

@@ -53,7 +53,7 @@ class Pm extends Model
     }
     function dd_menu($param=array()){
         $query = DB::table($this->t_menu);
-        $query->whereIn('sub_status', ['H','S']);
+        $query->whereNotNull('url');
         if(!empty($param['menu_code'])){
             $query->where('code', $param['menu_code']);
         }
