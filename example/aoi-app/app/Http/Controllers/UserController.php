@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         $this->acl->validateRead();
         $data=array();
-        $data['results'] = $this->user->all();
+        $data['results'] = $this->user->get_data();
         return view('user/index', $data);
     }
 
@@ -37,6 +37,7 @@ class UserController extends Controller
         $this->acl->validateStore();
         $data = array();
         $data['code'] = $this->user->generate_code();
+        $data['dd_role'] = $this->user->dd_role();
         return view('user/form/create', $data);
     }
 
@@ -87,6 +88,7 @@ class UserController extends Controller
     {
         $this->acl->validateUpdate();
         $data = array();
+        $data['dd_role'] = $this->user->dd_role();
         $data['result'] = $this->user->find($id);
         return view('user/form/edit', $data);
     }

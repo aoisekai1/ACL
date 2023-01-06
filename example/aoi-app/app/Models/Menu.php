@@ -122,7 +122,7 @@ class Menu extends Model
                     ->orderByDesc('id')
                     ->first();
         if($result){
-            $number = str_replace("M","",$result->code);
+            $number = str_replace($init_menu,"",$result->code);
             $code_menu = (int)$number + 1;
         }else{
             $code_menu = $code_menu + 1;

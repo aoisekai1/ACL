@@ -15,6 +15,7 @@ class Login extends Model
         $user = DB::table($this->table)
                 ->where('username', $param['username'])
                 ->where('password', $param['password'])
+                ->where('is_active', 1)
                 ->first();
         return $user;
     }

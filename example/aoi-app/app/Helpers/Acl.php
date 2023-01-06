@@ -56,6 +56,7 @@
                         ->leftJoin($this->user.' as u', 'u.code','=','pu.user_code')
                         ->leftJoin($this->role.' as r','r.code','=','u.role_code')
                         ->where('pu.user_code', $userinfo->code)
+                        ->where('u.is_active', 1)
                         ->first();
             return $result;
         }
