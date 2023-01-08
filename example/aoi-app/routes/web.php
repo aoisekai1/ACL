@@ -1,5 +1,7 @@
 <?php
-use Acl as Acl;
+
+// use App\Events\HelloEvent;
+use App\Helpers\Acl as HelpersAcl;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,13 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/maintenance', function () {
-    $acl = new Acl;
+    $acl = new HelpersAcl;
     $acl->maintenanceWeb();
     return view('maintenance');
 });
+Route::get('/', function(){
+    return view('welcome');
+});
+Route::get('/send', function(){
+    $text = date('Y-m-d H:i:s').' Hello baka chat';
+    broadcast(new App\Events\HelloEvent($text));
+});
 
 Route::group(['middleware' => 'verify.user'], function () {
-    Route::get('/', 'App\Http\Controllers\LoginController@index')->name('home');
+    // Route::get('/', 'App\Http\Controllers\LoginController@index')->name('home');
     Route::get('login', 'App\Http\Controllers\LoginController@index')->name('login');
     Route::post('login/auth', 'App\Http\Controllers\LoginController@auth')->name('login.auth');
 });

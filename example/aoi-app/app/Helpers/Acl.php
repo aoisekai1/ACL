@@ -86,7 +86,11 @@
         private function isAllGranted(){
             $result = $this->getPermissionUser();
             $setting = $this->getSetting();
+            $userinfo = $this->getMySession();
             if(!$result){
+                if($userinfo->role_code == $setting->role_code_access_all){
+                    return true;
+                }
                 return false; 
             }
             if(!$setting){
